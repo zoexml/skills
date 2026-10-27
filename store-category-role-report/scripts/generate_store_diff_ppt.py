@@ -765,14 +765,6 @@ def format_score_gap(value):
     return f"-{abs(value):.0f}分"
 
 
-def format_disadvantage_gap(value):
-    if pd.isna(value):
-        return "差距-"
-    if value >= 0:
-        return f"-{value:.0f}分"
-    return f"+{abs(value):.0f}分"
-
-
 def build_advantage_metric_matrix(detail_df, cutoffs, store_id, metric):
     headers = ["部门", *LEVEL_LABELS]
     rows = [headers]
@@ -833,7 +825,7 @@ def build_disadvantage_metric_matrix(disadv_df, cutoffs, store_id, metric):
             else:
                 df = df.sort_values(["得分差距", "企业综合得分"], ascending=[False, False])
                 items = [
-                    f"{short_name(r['品类名称'], 6)}｜{DEPT_MAP.get(dept, dept)}｜{format_disadvantage_gap(r['得分差距'])}｜店得分{r['门店综合得分']:.0f}｜卖力{r['门店卖力指数']:.1f}"
+                    f"{short_name(r['品类名称'], 6)}｜{DEPT_MAP.get(dept, dept)}｜{format_score_gap(r['得分差距'])}｜店得分{r['门店综合得分']:.0f}｜卖力{r['门店卖力指数']:.1f}"
                     for _, r in df.head(3).iterrows()
                 ]
             row_values.append("\n".join(items))
@@ -872,7 +864,7 @@ def build_disadvantage_gap_cross_level_table(disadv_df, cutoffs, store_id):
             df["得分差距"] = df["阈值"] - df["门店综合得分"]
             df = df.sort_values(["得分差距", "企业综合得分"], ascending=[False, False])
             items = [
-                f"{short_name(r['品类名称'], 7)}｜{r['层级']}｜{DEPT_MAP.get(dept, dept)}｜{format_disadvantage_gap(r['得分差距'])}｜店得分{r['门店综合得分']:.0f}｜卖力{r['门店卖力指数']:.1f}"
+                f"{short_name(r['品类名称'], 7)}｜{r['层级']}｜{DEPT_MAP.get(dept, dept)}｜{format_score_gap(r['得分差距'])}｜店得分{r['门店综合得分']:.0f}｜卖力{r['门店卖力指数']:.1f}"
                 for _, r in df.head(3).iterrows()
             ]
         else:
