@@ -7,7 +7,8 @@
 | 技能 | 用途 | 装载 agent |
 |---|---|---|
 | `frontend-standards` | 前端编码规范：SCSS 嵌套（`&` 变体、≤3 层）、箭头函数、改代码同步文档 | claude, codex, workbuddy |
-| `timeslot-heatmap` | 门店×时段销售热力图（丽达口径，含门店类型图例） | claude |
+| `timeslot-heatmap` | 门店×时段销售热力图（丽达口径，含门店类型图例） | claude, codex, workbuddy |
+| `category-role-calculation` | 品类角色计算：3/4/5 级、月度/四季维度，兼容旧版算法 | claude, codex, workbuddy |
 | `store-category-role-report` | 企业-门店品类角色差异分析：明细工作簿 + 可编辑 PPT | codex |
 
 ## 结构
