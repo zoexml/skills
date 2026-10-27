@@ -1,0 +1,3 @@
+display_name: Store Category Role Report
+short_description: Generate enterprise-vs-store category role workbook and PPT reports.
+default_prompt: Generate the store category role analysis report from the provided enterprise and store Excel files.

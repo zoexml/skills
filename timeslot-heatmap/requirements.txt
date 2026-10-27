@@ -1,0 +1,12 @@
+# 门店时段销售热力图依赖
+# 实测环境：Python 3.13 + pandas 3.0.5 / openpyxl 3.1.5 / Pillow 12.3.0
+#
+# - openpyxl 是 pandas 读 .xlsx 的后端，装了才能 read_excel
+# - Pillow 负责画图（热力图和图标都是 PIL 手绘，不用 matplotlib）
+# - 字体不在这里管：脚本按平台自动探测系统中文字体，找不到会报错并列出候选路径
+#
+# 安装：python -m pip install -r requirements.txt
+
+pandas>=2.0
+openpyxl>=3.1
+pillow>=10.0
