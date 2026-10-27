@@ -29,17 +29,21 @@ skills/
 
 1. **改内容必须升 `version`**（patch/minor/major 按语义），方便和 magpie 里装的副本对账。
 2. **产物不进仓库**：`outputs/`、`__pycache__`、`.DS_Store` 已在 `.gitignore`。
-3. **改完要同步到 magpie**。`magpie library sync` 只检查 agent 有没有装，**不会**把 folder 源的内容变更推出去，必须手动覆盖：
+3. **改完要 push 再让 magpie 重新拉**。技能在 magpie 里以 GitHub 源安装（`zoexml/skills` + path），本地改动不会自动同步：
 
    ```bash
-   for d in ~/.config/magpie/library/skills/<name> ~/.claude/skills/<name>; do
-     [ -d "$d" ] && cp -R "<name>/." "$d/"
-   done
+   git add -A && git commit -m "feat(<name>): …" && git push
+
+   # 安装/更新只能走 web 模式（没有 CLI 子命令）
+   HTTPS_PROXY=socks5://127.0.0.1:7890 HTTP_PROXY=socks5://127.0.0.1:7890 \
+     MAGPIE_WEB_KEY=<key> /Applications/magpie.app/Contents/MacOS/magpie web \
+     --no-open --addr 127.0.0.1:3499 &
+   magpie library skill update <name> --replace-edits
    ```
 
-   （codex / workbuddy 是指向 library 副本的软链，覆盖 library 即可。）
+   下载走 `codeload.github.com`，该域名在本机被代理 fake-ip 劫持，不挂 socks5 会报 EOF；GUI 里直接点更新同样会失败。
 4. **提交信息**用 `feat(<skill>): …` / `fix(<skill>): …`，一个技能一次改动一条。
 
 ## 来源
 
-这些技能为自维护，不依赖上游仓库。若将来迁到 GitHub 源（`zoexml/skills`），每个技能按 `repo + path` 单独安装，magpie 会记录各自的 `commit` 用于更新检查。
+全部自维护，以 GitHub 源安装：`zoexml/skills::<name>`，magpie 为每个技能记录内容 `hash` 用于更新检查。技能之间互不依赖，可单独安装到任意 agent。
