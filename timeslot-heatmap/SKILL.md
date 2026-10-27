@@ -1,5 +1,6 @@
 ---
 name: timeslot-heatmap
+version: 1.1.0
 description: 生成门店「时段销售」热力图 —— 从门店×时段销售报表算出各时段交易占比或日均交易笔数，渲染成热力图 PNG，并可叠加门店类型图标/图例与门店三件套指标（SKU 数、销售额、客单价）。当用户提到时段销售、时段热力图、分时经营、门店时段交易占比、日均交易笔数热力图、高峰时段或排班分析，或要复现、更新丽达那套「各门店时段交易占比热力图」（含门店类型图例版、75 天口径、3 笔/日以下置 0）时，务必使用本 skill —— 即使他们没提「热力图」三个字，只说「那个分时的图再出一版」也要用。
 ---
 
@@ -75,6 +76,16 @@ HEATMAP_ROOT=/data/heatmap-root python generate_time_heatmap.py
 ```
 
 指错了会得到一条明确的提示（而不是裸的 FileNotFoundError），告诉你要放哪个路径、或者该指向哪一层。
+
+### 装在各 Agent 里的副本是只读的
+
+Agent 里那份（`~/.claude/skills/timeslot-heatmap`、magpie 资源库副本）**不要在里面生成产物** —— 一写 `outputs/`，magpie 就会把它标成「本地已改动」，下次升级会冲突。跑脚本时把根目录指到仓库工作副本：
+
+```bash
+HEATMAP_ROOT=~/code/skills/timeslot-heatmap python generate_time_heatmap.py
+```
+
+`data/` 和 `outputs/` 都落在仓库工作副本里（`outputs/` 已在 `.gitignore`，不会进仓库）。
 
 ## 数据源：两张表，用途不同
 
