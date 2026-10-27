@@ -1,0 +1,3 @@
+display_name: 品类角色计算
+short_description: 从零售 CSV 计算门店、企业、业态的 3/4/5 级品类角色。
+default_prompt: 按门店、企业、业态，以及月度和春夏秋冬维度，计算 3/4/5 级品类角色并输出可打开的 Excel 文件。
